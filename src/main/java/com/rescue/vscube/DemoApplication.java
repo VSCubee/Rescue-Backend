@@ -1,4 +1,4 @@
-package com.rescue.demo;
+package com.rescue.vscube;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
