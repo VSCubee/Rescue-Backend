@@ -8,6 +8,14 @@ CREATE TABLE agency (
     registered_location VARCHAR(255) NOT NULL
 );
 
+CREATE TABLE events (
+    id bigint PRIMARY KEY,
+    name VARCHAR(255),
+    created_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    description VARCHAR(255),
+    coordinates jsonb
+);
+
 ----------------------------------DO ONLY TILL THIS FOR NOW-------------------------------------------------------------
 
 
