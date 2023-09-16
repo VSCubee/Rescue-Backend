@@ -17,7 +17,7 @@ import java.sql.Timestamp;
 @Table(name = "agency")
 public class Agency {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)
