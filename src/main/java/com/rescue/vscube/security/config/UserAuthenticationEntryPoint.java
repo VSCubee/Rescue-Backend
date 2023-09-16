@@ -1,7 +1,8 @@
-package com.rescue.vscube.config;
+package com.rescue.vscube.security.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.rescue.vscube.dtos.ErrorDto;
+
+import com.rescue.vscube.security.dtos.ErrorDto;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

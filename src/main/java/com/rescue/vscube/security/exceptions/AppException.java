@@ -1,4 +1,4 @@
-package com.rescue.vscube.exceptions;
+package com.rescue.vscube.security.exceptions;
 
 import org.springframework.http.HttpStatus;
 

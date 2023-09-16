@@ -1,7 +1,7 @@
-package com.rescue.vscube.config;
+package com.rescue.vscube.security.config;
 
-import com.rescue.vscube.dtos.ErrorDto;
-import com.rescue.vscube.exceptions.AppException;
+import com.rescue.vscube.security.dtos.ErrorDto;
+import com.rescue.vscube.security.exceptions.AppException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;

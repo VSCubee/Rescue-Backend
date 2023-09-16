@@ -1,4 +1,4 @@
-package com.rescue.vscube.config;
+package com.rescue.vscube.security.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

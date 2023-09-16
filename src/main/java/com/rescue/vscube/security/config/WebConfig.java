@@ -1,4 +1,4 @@
-package com.rescue.vscube.config;
+package com.rescue.vscube.security.config;
 
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
