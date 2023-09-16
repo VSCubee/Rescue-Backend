@@ -1,4 +1,4 @@
-package com.rescue.vscube.config;
+package com.rescue.vscube.security.config;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

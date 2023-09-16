@@ -1,4 +1,4 @@
-package com.rescue.vscube.controllers;
+package com.rescue.vscube.security.controllers;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

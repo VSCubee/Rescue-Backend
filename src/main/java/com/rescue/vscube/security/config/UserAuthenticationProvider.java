@@ -1,11 +1,11 @@
-package com.rescue.vscube.config;
+package com.rescue.vscube.security.config;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.rescue.vscube.dtos.UserDto;
-import com.rescue.vscube.services.UserService;
+import com.rescue.vscube.agency.AgencyService;
+import com.rescue.vscube.security.dtos.UserDto;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -24,7 +24,7 @@ public class UserAuthenticationProvider {
     @Value("${security.jwt.token.secret-key:secret-key}")
     private String secretKey;
 
-    private final UserService userService;
+    private final AgencyService agencyService;
 
     @PostConstruct
     protected void init() {
@@ -41,8 +41,7 @@ public class UserAuthenticationProvider {
                 .withSubject(user.getLogin())
                 .withIssuedAt(now)
                 .withExpiresAt(validity)
-                .withClaim("firstName", user.getFirstName())
-                .withClaim("lastName", user.getLastName())
+                .withClaim("name", user.getName())
                 .sign(algorithm);
     }
 
@@ -56,8 +55,7 @@ public class UserAuthenticationProvider {
 
         UserDto user = UserDto.builder()
                 .login(decoded.getSubject())
-                .firstName(decoded.getClaim("firstName").asString())
-                .lastName(decoded.getClaim("lastName").asString())
+                .name(decoded.getClaim("name").asString())
                 .build();
 
         return new UsernamePasswordAuthenticationToken(user, null, Collections.emptyList());
@@ -71,7 +69,7 @@ public class UserAuthenticationProvider {
 
         DecodedJWT decoded = verifier.verify(token);
 
-        UserDto user = userService.findByLogin(decoded.getSubject());
+        UserDto user = agencyService.findByLogin(decoded.getSubject());
 
         return new UsernamePasswordAuthenticationToken(user, null, Collections.emptyList());
     }

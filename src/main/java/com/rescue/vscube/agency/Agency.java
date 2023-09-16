@@ -1,4 +1,4 @@
-package com.rescue.vscube.entites;
+package com.rescue.vscube.agency;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
@@ -7,25 +7,22 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Timestamp;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Data
 @Entity
-@Table(name = "users")
-public class User {
-
+@Table(name = "agency")
+public class Agency {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    @Column(name = "first_name", nullable = false)
+    @Column(nullable = false)
     @Size(max = 100)
-    private String firstName;
-
-    @Column(name = "last_name", nullable = false)
-    @Size(max = 100)
-    private String lastName;
+    private String name;
 
     @Column(nullable = false)
     @Size(max = 100)
@@ -34,5 +31,14 @@ public class User {
     @Column(nullable = false)
     @Size(max = 100)
     private String password;
+
+    @Column(nullable = false)
+    private String description;
+
+    @Column(name = "last_updated")
+    private Timestamp lastUpdated;
+
+    @Column(name = "registered_location", nullable = false)
+    private String registeredLocation;
 
 }
