@@ -15,6 +15,8 @@ public class TaskController {
 
     @Autowired
     private TaskService taskService;
+
+
     @GetMapping("")
     public ResponseEntity<List<Task>> getAllTasks() {
         return ResponseEntity.ok(taskService.getALLTasks());
@@ -22,8 +24,11 @@ public class TaskController {
 
     @PostMapping("")
     public ResponseEntity<Task> addTask(@RequestBody Task task) {
+        taskService.addTask(task);
         return ResponseEntity.ok(task);
     }
+
+
 
 
 

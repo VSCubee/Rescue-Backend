@@ -31,4 +31,11 @@ public class Task {
     @Column(nullable = false)
     private String status;
 
+    @PrePersist
+    public void setDefaultValues() {
+        if (time_created == null) {
+            time_created = new Timestamp(System.currentTimeMillis());
+        }
+    }
+
 }

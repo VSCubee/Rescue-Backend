@@ -19,10 +19,10 @@ public class TaskService {
     }
 
     public Task addTask(Task task) {
+
         return taskRepository.save(task);
     }
 
-    @PutMapping("/updateStatus")
     public Task updateStatus(Task task) {
         task.setStatus("Completed");
         return task;
