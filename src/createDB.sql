@@ -8,6 +8,24 @@ CREATE TABLE agency (
     registered_location VARCHAR(255) NOT NULL
 );
 
+CREATE TABLE task (
+    event_id bigint NOT NULL,
+    task_id bigserial PRIMARY KEY,
+    description VARCHAR(255) NOT NULL,
+    time_created TIMESTAMP NOT NULL,
+    status boolean NOT NULL
+);
+
+CREATE TABLE event_team (
+    event_id bigint,
+    team_id bigint
+);
+
+CREATE TABLE ask_team (
+    task_id bigint,
+    team_id bigint
+);
+
 CREATE TABLE events (
     id bigint PRIMARY KEY,
     name VARCHAR(255),

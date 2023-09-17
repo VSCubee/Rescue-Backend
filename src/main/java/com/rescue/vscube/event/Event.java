@@ -27,7 +27,7 @@ public class Event {
 
     private String name;
 
-    @Column(name="created_on", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @Column(name="created_on")
     private Timestamp createdOn;
 
     private String description;
