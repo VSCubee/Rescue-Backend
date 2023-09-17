@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PutMapping;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @NoArgsConstructor
@@ -28,7 +29,10 @@ public class TaskService {
         return task;
     }
 
-
+    public Task findOne(Long taskId){
+        Optional<Task> task = taskRepository.findById(taskId);
+        return task.orElse(null);
+    }
 
 
 }

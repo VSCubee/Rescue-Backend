@@ -5,7 +5,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -28,8 +27,9 @@ public class TaskController {
         return ResponseEntity.ok(task);
     }
 
-
-
-
+    @GetMapping("/{task_id}")
+    public ResponseEntity<Task> getEvent(@PathVariable Long task_id){
+        return ResponseEntity.ok(taskService.findOne(task_id));
+    }
 
 }
