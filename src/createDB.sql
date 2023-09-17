@@ -8,7 +8,6 @@ CREATE TABLE agency (
     registered_location VARCHAR(255) NOT NULL
 );
 
-
 CREATE TABLE task (
     event_id bigint NOT NULL,
     task_id bigserial PRIMARY KEY,
@@ -34,7 +33,6 @@ CREATE TABLE events (
     description VARCHAR(255),
     coordinates jsonb
 );
-
 
 ----------------------------------DO ONLY TILL THIS FOR NOW-------------------------------------------------------------
 

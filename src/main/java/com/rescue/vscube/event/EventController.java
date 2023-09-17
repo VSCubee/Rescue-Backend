@@ -25,4 +25,9 @@ public class EventController {
     public ResponseEntity<Event> addEvent(@RequestBody Event event){
         return new ResponseEntity<Event>(eventService.addEvent(event),HttpStatus.OK);
     }
+
+    @GetMapping("/{event_id}")
+    public ResponseEntity<Event> getEvent(@PathVariable Long event_id){
+        return new ResponseEntity<>(eventService.getEventById(event_id),HttpStatus.OK);
+    }
 }
