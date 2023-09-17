@@ -14,11 +14,11 @@ import lombok.Setter;
 @Embeddable
 @NoArgsConstructor
 public class Coordinate {
-    private float longitude;
-    private float latitude;
+    private double longitude;
+    private double latitude;
 
     @JsonCreator
-    public Coordinate(@JsonProperty("latitude") float latitude, @JsonProperty("longitude") float longitude) {
+    public Coordinate(@JsonProperty("latitude") double latitude, @JsonProperty("longitude") double longitude) {
         this.latitude = latitude;
         this.longitude = longitude;
     }
