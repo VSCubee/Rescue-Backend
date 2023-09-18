@@ -28,8 +28,20 @@ public class TaskController {
     }
 
     @GetMapping("/{task_id}")
-    public ResponseEntity<Task> getEvent(@PathVariable Long task_id){
+    public ResponseEntity<TaskDTO> getEvent(@PathVariable Long task_id){
         return ResponseEntity.ok(taskService.findOne(task_id));
     }
+
+    @PutMapping("")
+    public ResponseEntity<Task> updateTask(@RequestBody Task task){
+        return ResponseEntity.ok(taskService.updateTask(task));
+    }
+
+    @PutMapping("/{task_id}/agency/{agency_id}")
+    public ResponseEntity<Void> addAgency(@PathVariable Long task_id,@PathVariable Long agency_id){
+        taskService.addAgency(task_id,agency_id);
+        return ResponseEntity.ok().build();
+    }
+
 
 }
