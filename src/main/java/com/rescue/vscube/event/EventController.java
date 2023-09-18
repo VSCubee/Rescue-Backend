@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RequestMapping("/api/events")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 public class EventController {
 
