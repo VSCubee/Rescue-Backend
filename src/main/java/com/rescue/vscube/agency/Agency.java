@@ -1,5 +1,6 @@
 package com.rescue.vscube.agency;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -30,6 +31,7 @@ public class Agency {
 
     @Column(nullable = false)
     @Size(max = 100)
+    @JsonIgnore
     private String password;
 
     @Column(nullable = false)

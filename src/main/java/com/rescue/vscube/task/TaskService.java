@@ -8,6 +8,7 @@ import com.rescue.vscube.agency.AgencyRepository;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,16 +54,14 @@ public class TaskService {
     }
 
     public void addAgency(Long taskId,Long agencyId){
-        TaskDTO taskDTO = findOne(taskId);
+        Optional<Task> task = taskRepository.findById(taskId);
 
         Optional<Agency> agency2 = agencyRepository.findById(agencyId);
         Agency agency = agency2.orElse(null);
 
         TaskTeam taskTeam = new TaskTeam();
-        Task task = new Task(taskDTO.getTask_id(),taskDTO.getEvent_id(),taskDTO.getDescription(),taskDTO.getTime_created(), taskDTO.getStatus());
-        taskTeam.setTask(task);
+        taskTeam.setTask(task.get());
         taskTeam.setAgency(agency);
-
         taskTeamRepository.save(taskTeam);
     }
 

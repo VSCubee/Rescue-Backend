@@ -22,11 +22,11 @@ public class EventTeam {
 
     @ManyToOne
     @MapsId("eventId")
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "event_id")
     private Event event;
 
     @ManyToOne
     @MapsId("agencyId")
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "agency_id")
     private Agency agency;
 }

@@ -13,7 +13,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name="task_team")
+@Table(name="task_team",uniqueConstraints = @UniqueConstraint(columnNames = {"task_id", "agency_id"}))
+
 public class TaskTeam {
 
     @Id
@@ -21,12 +22,10 @@ public class TaskTeam {
     private Long id;
 
     @ManyToOne
-    @MapsId("task_id")
     @JoinColumn(name = "task_id")
     private Task task;
 
     @ManyToOne
-    @MapsId("agencyId")
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "agency_id")
     private Agency agency;
 }
