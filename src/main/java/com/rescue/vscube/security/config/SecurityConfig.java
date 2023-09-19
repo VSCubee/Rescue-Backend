@@ -11,6 +11,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
+
 @RequiredArgsConstructor
 @Configuration
 @EnableWebSecurity
@@ -28,7 +29,7 @@ public class SecurityConfig {
                 .sessionManagement(customizer -> customizer.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers(HttpMethod.POST,  "/api/auth/login",  "/api/auth/register").permitAll()
-                        .anyRequest().permitAll()) //authenticated())
+                        .anyRequest().permitAll()) //authenticated())//permitAll())
         ;
         return http.build();
     }

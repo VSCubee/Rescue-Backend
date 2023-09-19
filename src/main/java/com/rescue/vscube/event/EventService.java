@@ -28,7 +28,17 @@ public class EventService {
         return eventRepository.findAll();
     }
 
-    public  Event addEvent(Event event){
+    public  Event addEvent(EventDTO eventDTO){
+        Agency agency = agencyRepository.findById(eventDTO.getCreatedBy()).get();
+
+        Event event = new Event();
+        event.setCoordinates(eventDTO.getCoordinates());
+        event.setCreatedOn(eventDTO.getCreatedOn());
+        event.setCoordinates(eventDTO.getCoordinates());
+        event.setDescription(eventDTO.getDescription());
+        event.setCreatedBy(agency);
+        event.setName(eventDTO.getName());
+
         return eventRepository.save(event);
     }
 
