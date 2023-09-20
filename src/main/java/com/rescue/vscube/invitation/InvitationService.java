@@ -4,6 +4,7 @@ import com.rescue.vscube.agency.Agency;
 import com.rescue.vscube.agency.AgencyRepository;
 import com.rescue.vscube.event.Event;
 import com.rescue.vscube.event.EventRepository;
+import com.rescue.vscube.event.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,9 @@ public class InvitationService {
     private EventRepository eventRepository;
     @Autowired
     private AgencyRepository agencyRepository;
+
+    @Autowired
+    private EventService eventService;
 
     public Invitation addInvitation(InvitationDTO invitationDTO){
         Long eventId = invitationDTO.getEventId();
@@ -38,6 +42,9 @@ public class InvitationService {
     public void changeStatus(Long invitationId, String status){
         Invitation invitation = invitationRepository.findById(invitationId).get();
         invitation.setStatus(status);
+        if(status.equals("accepted")){
+            eventService.addAgency(invitation.getEvent().getId(),invitation.getAgency().getId());
+        }
         invitationRepository.save(invitation);
 
     }
