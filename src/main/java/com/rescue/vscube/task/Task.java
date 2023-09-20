@@ -38,6 +38,9 @@ public class Task {
         if (time_created == null) {
             time_created = new Timestamp(System.currentTimeMillis());
         }
+        if (status == null) {
+            status = "ongoing";
+        }
     }
 
 }
