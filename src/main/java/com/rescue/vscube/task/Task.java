@@ -1,5 +1,6 @@
 package com.rescue.vscube.task;
 
+import com.rescue.vscube.event.Event;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -19,8 +20,9 @@ public class Task {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long task_id;
 
-    @Column(nullable = false)
-    private Long event_id;
+    @ManyToOne
+    @JoinColumn(name = "event_id")
+    private Event event;
 
     @Column(nullable = false)
     private String description;

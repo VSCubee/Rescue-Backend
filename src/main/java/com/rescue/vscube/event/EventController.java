@@ -1,10 +1,20 @@
 package com.rescue.vscube.event;
 
 
+
+import com.rescue.vscube.security.config.AuthenticationUtils;
+import com.rescue.vscube.security.dtos.UserDto;
 import com.rescue.vscube.task.Task;
+
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+
+import com.rescue.vscube.task.Task;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,12 +34,14 @@ public class EventController {
     }
 
     @PostMapping("")
-    public ResponseEntity<Event> addEvent(@RequestBody Event event){
-        return new ResponseEntity<Event>(eventService.addEvent(event),HttpStatus.OK);
+    public ResponseEntity<Event> addEvent(@RequestBody EventDTO eventDTO){
+        Long userId = AuthenticationUtils.getUserId();
+        eventDTO.setCreatedBy(userId);
+        return new ResponseEntity<Event>(eventService.addEvent(eventDTO), HttpStatus.OK);
     }
 
     @GetMapping("/{event_id}")
-    public ResponseEntity<Event> getEvent(@PathVariable Long event_id){
+    public ResponseEntity<EventDTO> getEvent(@PathVariable Long event_id){
         return new ResponseEntity<>(eventService.getEventById(event_id),HttpStatus.OK);
     }
 
@@ -43,6 +55,4 @@ public class EventController {
     public ResponseEntity<Event> updateEvent(@RequestBody Event event){
         return ResponseEntity.ok(eventService.updateEvent(event));
     }
-
-
 }

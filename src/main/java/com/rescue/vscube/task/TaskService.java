@@ -5,6 +5,9 @@ import com.rescue.vscube.TaskTeam.TaskTeamRepository;
 import com.rescue.vscube.agency.Agency;
 
 import com.rescue.vscube.agency.AgencyRepository;
+import com.rescue.vscube.event.Event;
+import com.rescue.vscube.event.EventRepository;
+import com.rescue.vscube.event.EventService;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,11 +30,24 @@ public class TaskService {
     @Autowired
     private AgencyRepository agencyRepository;
 
+    @Autowired
+    private EventService eventService;
+
+    @Autowired
+    private EventRepository eventRepository;
+
     public List<Task> getALLTasks() {
         return taskRepository.findAll();
     }
 
-    public Task addTask(Task task) {
+    public Task addTask(TaskDTO taskDTO) {
+        Event event = eventRepository.findById(taskDTO.getEvent_id()).get();
+
+        Task task =new Task();
+
+        task.setEvent(event);
+        task.setStatus(taskDTO.getStatus());
+        task.setDescription(taskDTO.getDescription());
 
         return taskRepository.save(task);
     }
@@ -48,7 +64,7 @@ public class TaskService {
         for(TaskTeam agency:taskTeam){
             agencies.add(agency.getAgency());
         }
-        TaskDTO taskDTO = new TaskDTO(taskId, task.get().getEvent_id(), task.get().getDescription(),task.get().getTime_created(),task.get().getStatus(),
+        TaskDTO taskDTO = new TaskDTO(taskId, task.get().getEvent().getId(), task.get().getDescription(),task.get().getTime_created(),task.get().getStatus(),
                 agencies);
         return taskDTO;
     }

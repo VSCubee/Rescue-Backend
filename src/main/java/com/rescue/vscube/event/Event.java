@@ -1,6 +1,7 @@
 package com.rescue.vscube.event;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.rescue.vscube.agency.Agency;
 import com.rescue.vscube.models.Coordinate;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -35,6 +36,10 @@ public class Event {
     @ElementCollection
     @Convert(converter = CoordinateListConverter.class)
     private List<Coordinate> coordinates;
+
+    @ManyToOne
+    @JoinColumn(name = "created_by")
+    private Agency createdBy;
 
     @PrePersist
     public void setDefaultValues() {
