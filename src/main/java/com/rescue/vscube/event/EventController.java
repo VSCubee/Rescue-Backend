@@ -1,12 +1,16 @@
 package com.rescue.vscube.event;
 
 
+
 import com.rescue.vscube.security.config.AuthenticationUtils;
 import com.rescue.vscube.security.dtos.UserDto;
 import com.rescue.vscube.task.Task;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+
+import com.rescue.vscube.task.Task;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RequestMapping("/api/events")
+@CrossOrigin
 @RestController
 public class EventController {
 
@@ -50,5 +55,4 @@ public class EventController {
     public ResponseEntity<Event> updateEvent(@RequestBody Event event){
         return ResponseEntity.ok(eventService.updateEvent(event));
     }
-
 }

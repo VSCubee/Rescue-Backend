@@ -84,4 +84,22 @@ public class EventService {
 
         return agencies;
     }
+
+    public void addAgency(Long eventId,Long agencyId){
+        Event event = getEventById(eventId);
+
+        Optional<Agency> agency2 = agencyRepository.findById(agencyId);
+        Agency agency = agency2.orElse(null);
+
+        EventTeam eventTeam = new EventTeam();
+        eventTeam.setEvent(event);
+        eventTeam.setAgency(agency);
+
+        eventTeamRepository.save(eventTeam);
+    }
+
+    public Event updateEvent(Event event) {
+        return eventRepository.save(event);
+
+    }
 }
