@@ -19,5 +19,6 @@ public class UserDto {
     private String description;
     private String registeredLocation;
     private Timestamp lastUpdated;
+    private String phone;
 
 }

@@ -8,6 +8,7 @@ import com.rescue.vscube.agency.AgencyRepository;
 import com.rescue.vscube.event.Event;
 import com.rescue.vscube.event.EventRepository;
 import com.rescue.vscube.event.EventService;
+import com.rescue.vscube.notification.NotificationService;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,6 +36,9 @@ public class TaskService {
 
     @Autowired
     private EventRepository eventRepository;
+
+    @Autowired
+    private NotificationService notificationService;
 
     public List<Task> getALLTasks() {
         return taskRepository.findAll();
@@ -79,6 +83,10 @@ public class TaskService {
         taskTeam.setTask(task.get());
         taskTeam.setAgency(agency);
         taskTeamRepository.save(taskTeam);
+
+        String message = "Hello you have been assigned to task " + task.get().getDescription() +" in the event "+task.get().getEvent().getName() ;
+
+        notificationService.sendMessage(agency.getPhone(),message);
     }
 
 }

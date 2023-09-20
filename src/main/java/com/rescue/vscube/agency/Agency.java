@@ -18,7 +18,7 @@ import java.sql.Timestamp;
 @Table(name = "agency")
 public class Agency {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
     @Column(nullable = false)
@@ -43,4 +43,6 @@ public class Agency {
     @Column(name = "registered_location", nullable = false)
     private String registeredLocation;
 
+    @Column(name = "phone")
+    private String phone;
 }
