@@ -36,7 +36,7 @@ public class EventController {
     }
 
     @GetMapping("/{event_id}")
-    public ResponseEntity<Event> getEvent(@PathVariable Long event_id){
+    public ResponseEntity<EventDTO> getEvent(@PathVariable Long event_id){
         return new ResponseEntity<>(eventService.getEventById(event_id),HttpStatus.OK);
     }
 
@@ -50,6 +50,5 @@ public class EventController {
     public ResponseEntity<Event> updateEvent(@RequestBody Event event){
         return ResponseEntity.ok(eventService.updateEvent(event));
     }
-
 
 }

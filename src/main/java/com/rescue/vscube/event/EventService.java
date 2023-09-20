@@ -9,6 +9,7 @@ import com.rescue.vscube.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,18 +43,28 @@ public class EventService {
         return eventRepository.save(event);
     }
 
-    public Event getEventById(Long eventId){
+    public EventDTO getEventById(Long eventId){
         Optional<Event> event = eventRepository.findById(eventId);
-        return event.orElse(null);
+        Event ev = event.orElse(null);
+
+        EventDTO eventDTO= new EventDTO(eventId,ev.getName(),
+                ev.getCreatedOn(),
+                ev.getDescription(),
+                ev.getCoordinates(),
+                ev.getCreatedBy().getId(),
+                getEventAgencies(ev));
+
+        return eventDTO;
     }
 
     public void addAgency(Long eventId,Long agencyId){
-        Event event = getEventById(eventId);
+        Event event = eventRepository.findById(eventId).get();
 
         Optional<Agency> agency2 = agencyRepository.findById(agencyId);
         Agency agency = agency2.orElse(null);
 
         EventTeam eventTeam = new EventTeam();
+
         eventTeam.setEvent(event);
         eventTeam.setAgency(agency);
 
@@ -62,6 +73,15 @@ public class EventService {
 
     public Event updateEvent(Event event) {
         return eventRepository.save(event);
+    }
 
+    public List<Agency> getEventAgencies(Event event){
+        List<EventTeam> teams = eventTeamRepository.findAllByEvent(event);
+        List<Agency> agencies= new ArrayList<>();
+
+        for(EventTeam eventTeam : teams)
+            agencies.add(eventTeam.getAgency());
+
+        return agencies;
     }
 }

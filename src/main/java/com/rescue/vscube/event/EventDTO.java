@@ -1,5 +1,6 @@
 package com.rescue.vscube.event;
 
+import com.rescue.vscube.agency.Agency;
 import com.rescue.vscube.models.Coordinate;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -26,4 +27,6 @@ public class EventDTO {
     private List<Coordinate> coordinates;
 
     private Long createdBy;
+
+    private List<Agency> agencies;
 }

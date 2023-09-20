@@ -6,6 +6,7 @@ import com.rescue.vscube.agency.Agency;
 
 import com.rescue.vscube.agency.AgencyRepository;
 import com.rescue.vscube.event.Event;
+import com.rescue.vscube.event.EventRepository;
 import com.rescue.vscube.event.EventService;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,12 +33,15 @@ public class TaskService {
     @Autowired
     private EventService eventService;
 
+    @Autowired
+    private EventRepository eventRepository;
+
     public List<Task> getALLTasks() {
         return taskRepository.findAll();
     }
 
     public Task addTask(TaskDTO taskDTO) {
-        Event event = eventService.getEventById(taskDTO.getEvent_id());
+        Event event = eventRepository.findById(taskDTO.getEvent_id()).get();
 
         Task task =new Task();
 
