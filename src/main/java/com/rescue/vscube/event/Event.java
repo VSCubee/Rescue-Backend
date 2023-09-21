@@ -33,6 +33,9 @@ public class Event {
 
     private String description;
 
+    @Column(name="region")
+    private String region;
+
     @ElementCollection
     @Convert(converter = CoordinateListConverter.class)
     private List<Coordinate> coordinates;

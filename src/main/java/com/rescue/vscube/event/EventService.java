@@ -39,6 +39,7 @@ public class EventService {
         event.setDescription(eventDTO.getDescription());
         event.setCreatedBy(agency);
         event.setName(eventDTO.getName());
+        event.setRegion(eventDTO.getRegion());
 
         return eventRepository.save(event);
     }
@@ -52,6 +53,7 @@ public class EventService {
                 ev.getDescription(),
                 ev.getCoordinates(),
                 ev.getCreatedBy().getId(),
+                ev.getRegion(),
                 getEventAgencies(ev));
 
         return eventDTO;

@@ -28,5 +28,8 @@ public class EventDTO {
 
     private Long createdBy;
 
+    private String region;
+
     private List<Agency> agencies;
+
 }
