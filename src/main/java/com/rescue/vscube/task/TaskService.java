@@ -59,17 +59,17 @@ public class TaskService {
 
     public TaskDTO findOne(Long taskId){
         Optional<Task> task = taskRepository.findById(taskId);
-        List<Agency> agencies = new ArrayList<Agency>();
+        List<AgencyDTO> agencies = new ArrayList<AgencyDTO>();
         List<TaskTeam> taskTeam = taskTeamRepository.findAllByTask(task.get());
         for(TaskTeam agency:taskTeam){
-            agencies.add(agency.getAgency());
+            agencies.add(new AgencyDTO(agency.getAgency(),agency.getRegion()));
         }
         TaskDTO taskDTO = new TaskDTO(taskId, task.get().getEvent().getId(), task.get().getDescription(),task.get().getTime_created(),task.get().getStatus(),
                 agencies);
         return taskDTO;
     }
 
-    public void addAgency(Long taskId,Long agencyId){
+    public void addAgency(Long taskId,Long agencyId,String region){
         Optional<Task> task = taskRepository.findById(taskId);
 
         Optional<Agency> agency2 = agencyRepository.findById(agencyId);
@@ -78,7 +78,17 @@ public class TaskService {
         TaskTeam taskTeam = new TaskTeam();
         taskTeam.setTask(task.get());
         taskTeam.setAgency(agency);
+        taskTeam.setRegion(region);
         taskTeamRepository.save(taskTeam);
     }
 
+    public List<TaskDTO> getTasksEvent(Long eventId){
+        Event event = eventRepository.findById(eventId).get();
+        List<Task> tasks = taskRepository.findByEvent(event);
+        List<TaskDTO> response = new ArrayList<>();
+        for(Task task : tasks){
+            response.add(findOne(task.getTask_id()));
+        }
+        return response;
+    }
 }

@@ -38,9 +38,13 @@ public class TaskController {
     }
 
     @PutMapping("/{task_id}/agency/{agency_id}")
-    public ResponseEntity<Void> addAgency(@PathVariable Long task_id,@PathVariable Long agency_id){
-        taskService.addAgency(task_id,agency_id);
+    public ResponseEntity<Void> addAgency(@PathVariable Long task_id,@PathVariable Long agency_id,@RequestParam String region){
+        taskService.addAgency(task_id,agency_id,region);
         return ResponseEntity.ok().build();
+    }
+    @GetMapping("/event/{event_id}")
+    public ResponseEntity<List<TaskDTO>> getTasksEvent(@PathVariable Long event_id){
+        return ResponseEntity.ok(taskService.getTasksEvent(event_id));
     }
 
 

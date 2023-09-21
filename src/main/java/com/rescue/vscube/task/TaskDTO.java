@@ -21,6 +21,6 @@ public class TaskDTO {
 
     private String status;
 
-    List<Agency> assignedTeams;
+    List<AgencyDTO> assignedTeams;
 
 }
