@@ -13,7 +13,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name="task_team",uniqueConstraints = @UniqueConstraint(columnNames = {"task_id", "agency_id"}))
+@Table(name="task_team")
 
 public class TaskTeam {
 
@@ -28,4 +28,6 @@ public class TaskTeam {
     @ManyToOne
     @JoinColumn(name = "agency_id")
     private Agency agency;
+
+    private String region;
 }
