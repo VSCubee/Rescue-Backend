@@ -1,25 +1,30 @@
 package com.rescue.vscube.chat;
 
 import com.rescue.vscube.Message.Message;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
-import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 
 @Controller
 public class ChatController {
-    @MessageMapping("/chat/register/{event_id}")
-    @SendTo("/topic/{event_id}")
-    public Message register(@Payload Message chatMessage, SimpMessageHeaderAccessor headerAccessor, @PathVariable Long event_id) {
-        headerAccessor.getSessionAttributes().put("username", chatMessage.getAgency().getName());
-        return chatMessage;
+
+    @Autowired
+    private SimpMessagingTemplate simpMessagingTemplate;
+
+    @MessageMapping("/message")
+    @SendTo("/chatroom/public")
+    public Message receiveMessage(@Payload Message message){
+        return message;
     }
 
-    @MessageMapping("/chat/send/{event_id}")
-    @SendTo("/topic/{event_id}")
-    public Message sendMessage(@Payload Message chatMessage, @PathVariable Long event_id) {
-        return chatMessage;
+    @MessageMapping("/private-message")
+    public Message recMessage(@Payload Message message){
+        simpMessagingTemplate.convertAndSendToUser(message.getAgency().getName(),"/private",message);
+        System.out.println(message.toString());
+        return message;
     }
 }
+
