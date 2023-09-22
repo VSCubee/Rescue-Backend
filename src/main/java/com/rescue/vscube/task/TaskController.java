@@ -1,6 +1,7 @@
 package com.rescue.vscube.task;
 
 
+import com.rescue.vscube.models.Coordinate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -38,8 +39,8 @@ public class TaskController {
     }
 
     @PutMapping("/{task_id}/agency/{agency_id}")
-    public ResponseEntity<Void> addAgency(@PathVariable Long task_id,@PathVariable Long agency_id,@RequestParam String region){
-        taskService.addAgency(task_id,agency_id,region);
+    public ResponseEntity<Void> addAgency(@PathVariable Long task_id, @PathVariable Long agency_id,@RequestBody CoordinateDTO coordinates){
+        taskService.addAgency(task_id,agency_id,coordinates.getRegion(),coordinates.getCoordinates());
         return ResponseEntity.ok().build();
     }
     @GetMapping("/event/{event_id}")

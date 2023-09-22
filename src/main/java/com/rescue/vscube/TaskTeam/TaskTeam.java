@@ -1,12 +1,16 @@
 package com.rescue.vscube.TaskTeam;
 
 import com.rescue.vscube.agency.Agency;
+import com.rescue.vscube.event.CoordinateListConverter;
+import com.rescue.vscube.models.Coordinate;
 import com.rescue.vscube.task.Task;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -30,4 +34,8 @@ public class TaskTeam {
     private Agency agency;
 
     private String region;
+
+    @ElementCollection
+    @Convert(converter = CoordinateListConverter.class)
+    private List<Coordinate> coordinates;
 }
