@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Date;
 import java.util.List;
 
 @RequestMapping("/api/agencies")
@@ -21,7 +22,9 @@ public class AgencyController {
     @GetMapping("/filter")
     public ResponseEntity<List<Agency>> filerAgencies(@RequestParam(name = "name", required = false) String name,
                                                       @RequestParam(name = "description", required = false) String description,
-                                                      @RequestParam(name = "location", required = false) String location){
-        return new ResponseEntity<List<Agency>>(agencyService.filter(name,description,location), HttpStatus.OK);
+                                                      @RequestParam(name = "location", required = false) String location,
+                                                      @RequestParam(name = "start_date", required = false) String startDate,
+                                                      @RequestParam(name = "end_date", required = false) String endDate){
+        return new ResponseEntity<List<Agency>>(agencyService.filter(name,description,location,startDate,endDate), HttpStatus.OK);
     }
 }

@@ -3,6 +3,7 @@ package com.rescue.vscube.event;
 
 import com.rescue.vscube.agency.Agency;
 import com.rescue.vscube.agency.AgencyRepository;
+import com.rescue.vscube.agency.AgencyService;
 import com.rescue.vscube.event_team.EventTeam;
 import com.rescue.vscube.event_team.EventTeamRepository;
 import com.rescue.vscube.task.Task;
@@ -25,6 +26,9 @@ public class EventService {
     @Autowired
     private AgencyRepository agencyRepository;
 
+    @Autowired
+    private AgencyService agencyService;
+
     public List<Event> getAllEvents(){
         return eventRepository.findAll();
     }
@@ -41,6 +45,7 @@ public class EventService {
         event.setName(eventDTO.getName());
         event.setRegion(eventDTO.getRegion());
 
+        agencyService.updateActivity(agency.getId());
         return eventRepository.save(event);
     }
 
@@ -71,6 +76,7 @@ public class EventService {
         eventTeam.setAgency(agency);
 
         eventTeamRepository.save(eventTeam);
+        agencyService.updateActivity(agencyId);
     }
 
     public Event updateEvent(Event event) {

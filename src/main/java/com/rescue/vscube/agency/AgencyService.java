@@ -1,6 +1,7 @@
 package com.rescue.vscube.agency;
 
-
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import com.rescue.vscube.security.dtos.CredentialsDto;
 import com.rescue.vscube.security.dtos.SignUpDto;
 import com.rescue.vscube.security.dtos.UserDto;
@@ -17,7 +18,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.nio.CharBuffer;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -64,7 +67,7 @@ public class AgencyService {
         return userMapper.toUserDto(agency);
     }
 
-    public List<Agency> filter(String name, String description, String location){
+    public List<Agency> filter(String name, String description, String location, String startDate, String endDate) {
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Agency> criteriaQuery = criteriaBuilder.createQuery(Agency.class);
         Root<Agency> root = criteriaQuery.from(Agency.class);
@@ -82,8 +85,35 @@ public class AgencyService {
             predicates.add(criteriaBuilder.like(criteriaBuilder.lower(root.get("description")), "%" + description.toLowerCase() + "%"));
         }
 
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+        if (startDate != null) {
+            try {
+                Date parsedStartDate = dateFormat.parse(startDate);
+                Timestamp startTimestamp = new Timestamp(parsedStartDate.getTime());
+
+                Timestamp endTimestamp;
+
+                if (endDate != null) {
+                    Date parsedEndDate = dateFormat.parse(endDate);
+                    endTimestamp = new Timestamp(parsedEndDate.getTime());
+                } else {
+                    endTimestamp = new Timestamp(System.currentTimeMillis());
+                }
+                predicates.add(criteriaBuilder.between(root.get("lastUpdated"), startTimestamp, endTimestamp));
+
+            } catch (ParseException e) {
+                // Handle parsing errors if the date strings are not in the expected format
+                e.printStackTrace();
+            }
+        }
         criteriaQuery.where(predicates.toArray(new Predicate[0]));
         return entityManager.createQuery(criteriaQuery).getResultList();
     }
 
+    public void updateActivity(Long agencyId){
+        Agency agency = agencyRepository.findById(agencyId).get();
+        agency.setLastUpdated(new Timestamp(System.currentTimeMillis()));
+        agencyRepository.save(agency);
+    }
 }
