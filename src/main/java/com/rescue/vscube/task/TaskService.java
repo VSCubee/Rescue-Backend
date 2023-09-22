@@ -5,6 +5,7 @@ import com.rescue.vscube.TaskTeam.TaskTeamRepository;
 import com.rescue.vscube.agency.Agency;
 
 import com.rescue.vscube.agency.AgencyRepository;
+import com.rescue.vscube.agency.AgencyService;
 import com.rescue.vscube.event.Event;
 import com.rescue.vscube.event.EventRepository;
 import com.rescue.vscube.event.EventService;
@@ -36,6 +37,9 @@ public class TaskService {
     @Autowired
     private EventRepository eventRepository;
 
+    @Autowired
+    private AgencyService agencyService;
+
     public List<Task> getALLTasks() {
         return taskRepository.findAll();
     }
@@ -54,7 +58,6 @@ public class TaskService {
 
     public Task updateTask(Task task) {
         return taskRepository.save(task);
-
     }
 
     public TaskDTO findOne(Long taskId){
@@ -80,6 +83,7 @@ public class TaskService {
         taskTeam.setAgency(agency);
         taskTeam.setRegion(region);
         taskTeamRepository.save(taskTeam);
+        agencyService.updateActivity(agencyId);
     }
 
     public List<TaskDTO> getTasksEvent(Long eventId){
