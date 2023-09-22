@@ -1,7 +1,8 @@
 package com.rescue.vscube.task;
 
-import com.rescue.vscube.agency.Agency;
+import com.rescue.vscube.event.CoordinateListConverter;
 import com.rescue.vscube.models.Coordinate;
+import jakarta.persistence.Convert;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,10 +14,10 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class AgencyDTO {
-    private Agency agency;
+public class CoordinateDTO {
 
     private String region;
 
-    private List<Coordinate> location;
+    @Convert(converter = CoordinateListConverter.class)
+    private List<Coordinate> coordinates;
 }

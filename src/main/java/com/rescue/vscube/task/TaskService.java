@@ -9,6 +9,7 @@ import com.rescue.vscube.agency.AgencyService;
 import com.rescue.vscube.event.Event;
 import com.rescue.vscube.event.EventRepository;
 import com.rescue.vscube.event.EventService;
+import com.rescue.vscube.models.Coordinate;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -65,14 +66,14 @@ public class TaskService {
         List<AgencyDTO> agencies = new ArrayList<AgencyDTO>();
         List<TaskTeam> taskTeam = taskTeamRepository.findAllByTask(task.get());
         for(TaskTeam agency:taskTeam){
-            agencies.add(new AgencyDTO(agency.getAgency(),agency.getRegion()));
+            agencies.add(new AgencyDTO(agency.getAgency(),agency.getRegion(),agency.getCoordinates()));
         }
         TaskDTO taskDTO = new TaskDTO(taskId, task.get().getEvent().getId(), task.get().getDescription(),task.get().getTime_created(),task.get().getStatus(),
                 agencies);
         return taskDTO;
     }
 
-    public void addAgency(Long taskId,Long agencyId,String region){
+    public void addAgency(Long taskId, Long agencyId, String region, List<Coordinate> coordinates){
         Optional<Task> task = taskRepository.findById(taskId);
 
         Optional<Agency> agency2 = agencyRepository.findById(agencyId);
@@ -82,7 +83,10 @@ public class TaskService {
         taskTeam.setTask(task.get());
         taskTeam.setAgency(agency);
         taskTeam.setRegion(region);
+        taskTeam.setCoordinates(coordinates);
+
         taskTeamRepository.save(taskTeam);
+
         agencyService.updateActivity(agencyId);
     }
 
